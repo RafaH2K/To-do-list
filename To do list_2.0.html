@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>To do List</h1>
+        <div class="input-group mb-3">
+            </label><input type="text" required id="nombreDeTarea" class="form-control" placeholder="Nombre de la tarea" aria-label="Nombre de la tarea" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="btnAdd">Agregar</button>
+        </div>
+        
+        <select id="estado">
+            <option value="Sin iniciar">Sin iniciar</option>
+            <option value="En proceso">En proceso</option>
+            <option value="Terminada">Terminada</option>
+        </select>
+        
+        
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <p>Sin iniciar</p>
+                <ul id="listaActividadesSinIniciar"></ul>
+            </div>
+            <div class="col-md-4">
+                <p>En proceso</p>
+                <ul id="listaActividadesEnProceso"></ul>
+            </div>
+            <div class="col-md-4">
+                <p>Terminada</p>
+                <ul id="listaActividadesTerminada"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card" style="width: 18rem;"></div>
+    <div class="card-body">
+    <h5 class="card-title">${parsearDatos[i].nombre}</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">${parsearDatos[i].estado}</h6>
+    <p class="card-text">${parsearDatos[i].detalles}</p>
+    <button type="button" class="btn" id="btnCambioAEnProceso">Cambiar estado</button>
+    </div>
+    </div>
+        
+    <script>
+        let arrayTarea = JSON.parse(localStorage.getItem("arrayTarea")) || [];
+        const botonAgregar = document.getElementById("btnAdd");
+        botonAgregar.addEventListener('click',()=>{
+        const tareaNombre = document.getElementById("nombreDeTarea").value;
+        const estado = document.getElementById("estado").value;
+
+        if (tareaNombre.length[0] == " ") {
+            alert("Por favor, ingrese un nombre de tarea válido");
+        } else {
+            const tarea = {
+            nombre: tareaNombre,
+            estado: estado
+            };
+            arrayTarea.push(tarea);
+            localStorage.setItem("arrayTarea", JSON.stringify(arrayTarea));
+            MostrarTarea();
+        }
+        });
+
+        function MoverTarea(){
+            const botonCambio1 = document.getElementById("btnCambioAEnProceso");
+            botonAgregar.addEventListener('click',()=>{
+                
+        }
+        
+        
+        function MostrarTarea(){
+            let detallesTarea = localStorage.getItem("arrayTarea");
+            let parsearDatos = JSON.parse(detallesTarea);
+            let sinIniciar = "";
+            let enProceso = "";
+            let terminada = "";
+            for(i=0; i<arrayTarea.length; i++){
+                if(parsearDatos[i].estado=="Sin iniciar"){
+                    sinIniciar += `<div class="card" style="width: 18rem;"></div>
+                                    <div class="card-body">
+                                    <h5 class="card-title">${parsearDatos[i].nombre}</h5>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">${parsearDatos[i].estado}</h6>
+                                    <p class="card-text"></p>
+                                    <button type="button" class="btn" id="btnCambioAEnProceso">Cambiar estado</button>
+                                    </div>
+                                </div>`
+                }
+                else if(parsearDatos[i].estado=="En proceso"){
+                    enProceso += `Tarea: ${parsearDatos[i].nombre}<br> Estado: ${parsearDatos[i].estado} <input type="checkbox"><hr><br>`
+                }
+                else if(parsearDatos[i].estado=="Terminada"){
+                    terminada += `Tarea: ${parsearDatos[i].nombre}<br> Estado: ${parsearDatos[i].estado}<hr><br>`
+                }
+                }   
+            document.getElementById("listaActividadesSinIniciar").innerHTML = sinIniciar;
+            document.getElementById("listaActividadesEnProceso").innerHTML = enProceso;
+            document.getElementById("listaActividadesTerminada").innerHTML = terminada;
+        }
+        window.onload = function() {
+        MostrarTarea();
+        };   
+    </script>
+
+</body>
+</html>

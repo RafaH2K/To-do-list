@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="sp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+<body>
+    <h1>To do list</h1>
+    <div>
+        <label for="txtTareaNombre">Nombre de la tarea <input type="text" id="nombreDeTarea"></label>
+        <select id="estado">
+            <option value="Sin iniciar">Sin iniciar</option>
+            <option value="En proceso">En proceso</option>
+            <option value="Terminada">Terminada</option>
+        </select>
+        <button type="button" id="btnAdd">Agregar</button>
+        <ul id="listaActividades"></ul>
+    </div>
+    
+    <script>
+        let actividadesArray = [];
+        //constante para darle la funcion al boton
+        const botonAgregar = document.getElementById("btnAdd");
+        botonAgregar.addEventListener('click',()=>{
+            const tareaNombre = {
+                nombre: document.getElementById("nombreDeTarea").value,
+                estado: document.getElementById("estado").value
+            };
+            //Hago un push para agregar la nueva tarea al array
+            actividadesArray.push(tareaNombre);
+            let tareaData = localStorage.setItem("actividadesArray", JSON.stringify(actividadesArray));
+        });  
+        
+        //para acceder a una propiedad en espesifico del localstorage se necesita poner .propiedad 
+        let tareaData = localStorage.getItem("actividadesArray");
+        let convertirDato = JSON.parse(tareaData);
+        
+        if(localStorage.length==0){
+            return null;
+        }
+        else{
+            document.getElementById("listaActividades").innerHTML = `Tarea: ${convertirDato[0].nombre} <br> Estado: ${convertirDato[0].estado}`;
+            console.log(convertirDato);
+        }
+        
+
+        /*function PushearDatosArray(dato){
+
+        }
+    </script>
+</body>
+</html>
