@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function(){
       const tareaNombre = document.getElementById("nombreDeTarea").value.trim();
       const estado = document.getElementById("estado").value;
       const detalle = document.getElementById("detallesDeTarea").value;
-  
+      limpiarInput();
       if (tareaNombre === "") {
         alert("Por favor, ingrese un nombre de tarea válido");
       } else {
@@ -19,7 +19,10 @@ document.addEventListener("DOMContentLoaded", function(){
         MostrarTarea();
       }
     });
-  
+    function limpiarInput() {
+      document.getElementById('nombreDeTarea').value = '';
+      document.getElementById('detallesDeTarea').value = '';
+  }
     function MostrarTarea() {
       let sinIniciar = "";
       let enProceso = "";
